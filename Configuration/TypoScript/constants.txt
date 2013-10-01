@@ -1,0 +1,14 @@
+plugin.tx_encdec {
+	view {
+		# cat=plugin.tx_encdec/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:encdec/Resources/Private/Templates/
+		# cat=plugin.tx_encdec/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:encdec/Resources/Private/Partials/
+		# cat=plugin.tx_encdec/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:encdec/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_encdec//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}
