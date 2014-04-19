@@ -3,46 +3,49 @@ namespace DreadLabs\Encdec\Hook;
 
 class BackendDocumentTemplate {
 
-    public function addRsaJavaScript(array &$params, \TYPO3\CMS\Backend\Template\DocumentTemplate &$template) {
-        if (FALSE === $this->isHookConditionMet()) {
-            return NULL;
-        }
+	public function addRsaJavaScript(array &$params, \TYPO3\CMS\Backend\Template\DocumentTemplate &$template) {
 
-        $javascriptPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath('rsaauth') . 'resources/';
+		if (FALSE === $this->isHookConditionMet()) {
+			return NULL;
+		}
 
-        $path = \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . $javascriptPath;
+		$javascriptPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath('rsaauth') . 'resources/';
 
-        $files = array(
-            'jsbn_jsbn' => $path . 'jsbn/jsbn.js',
-            'jsbn_prng4' => $path . 'jsbn/prng4.js',
-            'jsbn_rng' => $path . 'jsbn/rng.js',
-            'jsbn_rsa' => $path . 'jsbn/rsa.js',
-            'jsbn_base64' => $path . 'jsbn/base64.js',
-            //'jsbn_rsaauth_min' => $path . 'rsaauth_min.js'
-        );
+		$path = \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . $javascriptPath;
 
-        foreach ($files as $key => $file) {
-            $template->JScodeLibArray[$key] .= '<script type="text/javascript" src="' . $file . '"></script>';
-        }
-    }
+		$files = array(
+			'jsbn_jsbn' => $path . 'jsbn/jsbn.js',
+			'jsbn_prng4' => $path . 'jsbn/prng4.js',
+			'jsbn_rng' => $path . 'jsbn/rng.js',
+			'jsbn_rsa' => $path . 'jsbn/rsa.js',
+			'jsbn_base64' => $path . 'jsbn/base64.js'
+			// 'jsbn_rsaauth_min' => $path . 'rsaauth_min.js'
+		);
 
-    public function addEncryptDecryptEventListener(array &$params, \TYPO3\CMS\Backend\Template\DocumentTemplate &$template) {
-        if (FALSE === $this->isHookConditionMet()) {
-            return NULL;
-        }
+		foreach ($files as $key => $file) {
+			$template->JScodeLibArray[$key] = '<script type="text/javascript" src="' . $file . '"></script>';
+		}
+	}
 
-        //$template->JScodeArray['encrypt_decrypt_eventlistener'] = 'alert(\'Hey!\');';
-        //$editConf = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('edit');
-        //$template->JScodeArray['encdec_debug'] = 'alert(\'' . json_encode($editConf) . '\')';
-    }
+	public function addEncryptDecryptEventListener(array &$params,\TYPO3\CMS\Backend\Template\DocumentTemplate &$template) {
 
-    protected function isHookConditionMet() {
-        $editConf = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('edit');
+		if (FALSE === $this->isHookConditionMet()) {
+			return NULL;
+		}
 
-        $isEditConfArray = is_array($editConf);
-        $isExtensionKeyInEditConfArray = array_key_exists('tx_encdec_domain_model_content', (array) $editConf);
+		// $template->JScodeArray['encrypt_decrypt_eventlistener'] = 'alert(\'Hey!\');';
+		// $editConf = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('edit');
+		// $template->JScodeArray['encdec_debug'] = 'alert(\'' . json_encode($editConf) . '\')';
+	}
 
-        return $isEditConfArray && $isExtensionKeyInEditConfArray;
-    }
+	protected function isHookConditionMet() {
+
+		$editConf = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('edit');
+
+		$isEditConfArray = is_array($editConf);
+		$isExtensionKeyInEditConfArray = array_key_exists('tx_encdec_domain_model_content', (array) $editConf);
+
+		return $isEditConfArray && $isExtensionKeyInEditConfArray;
+	}
 }
 ?>

@@ -24,9 +24,13 @@ if (!defined('TYPO3_MODE')) {
 // decrypt hooks for rte (rte fields)
 
 // TYPO3\CMS\Backend\Template\DocumentTemplate::preStartPageHook
+$hookClassPath = 'EXT:encdec/Classes/Hook/BackendDocumentTemplate.php';
 // -- add js libs
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/template.php']['preStartPageHook'][] = 'EXT:encdec/Classes/Hook/BackendDocumentTemplate.php:&DreadLabs\\Encdec\\Hook\\BackendDocumentTemplate->addRsaJavaScript';
+$jsLibsHook = $hookClassPath . ':&DreadLabs\\Encdec\\Hook\\BackendDocumentTemplate->addRsaJavaScript';
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/template.php']['preStartPageHook'][] = $jsLibsHook;
+
 // -- add inline js
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/template.php']['preStartPageHook'][] = 'EXT:encdec/Classes/Hook/BackendDocumentTemplate.php:&DreadLabs\\Encdec\\Hook\\BackendDocumentTemplate->addEncryptDecryptEventListener';
+$jsInlineHook = $hookClassPath . ':&DreadLabs\\Encdec\\Hook\\BackendDocumentTemplate->addEncryptDecryptEventListener';
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/template.php']['preStartPageHook'][] = $jsInlineHook;
 
 ?>
